@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
+import Login from "./Login";
+import LoadingBar from 'react-redux-loading'
 
 class App extends Component {
   componentDidMount() {
@@ -8,7 +10,12 @@ class App extends Component {
     dispatch(handleInitialData());
   }
   render() {
-    return <div>Hiii</div>;
+    return (
+      <div>
+        <LoadingBar />
+        <Login />
+      </div>
+    );
   }
 }
 
