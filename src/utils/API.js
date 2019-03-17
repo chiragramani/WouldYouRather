@@ -6,3 +6,12 @@ export function getInitialData() {
     users
   }));
 }
+
+/// So that it becomes async which is the realistic behavior
+export function login() {
+  return new Promise(function(resolve,reject) {
+    setTimeout(() => {
+      resolve()
+    }, 1000);
+  })
+}

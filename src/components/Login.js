@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import SelectUser from "./SelectUser";
-import { setAuthedUser } from '../actions/authedUser'
+import { handleLogin } from "../actions/authedUser";
 
 class Login extends Component {
   state = {
@@ -19,12 +20,16 @@ class Login extends Component {
   didTapOnLogin = () => {
     const { dispatch } = this.props;
     const { selectedUserId } = this.state;
-    dispatch(setAuthedUser(selectedUserId))
+    dispatch(handleLogin(selectedUserId));
   };
 
   render() {
-    const { users } = this.props;
+    const { users, authedUser } = this.props;
+    if (authedUser) {
+      return <Redirect to="/home" />;
+    }
     const { selectedUserId } = this.state;
+
     const selectedUser =
       selectedUserId === null
         ? null
@@ -51,9 +56,10 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps({ users }) {
+function mapStateToProps({ users, authedUser }) {
   return {
-    users: Object.keys(users).map(id => users[id])
+    users: Object.keys(users).map(id => users[id]),
+    authedUser
   };
 }
 
