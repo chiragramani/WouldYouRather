@@ -8,6 +8,7 @@ import Leaderboard from "./Leaderboard";
 import NewQuestion from "./NewQuestion";
 import LoadingBar from "react-redux-loading";
 import PrivateRoute from "./PrivateRoute";
+import Nav from './Nav'
 
 class App extends Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+        <Nav />
           <LoadingBar />
           {loading ? null : (
             <div>

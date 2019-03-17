@@ -21,3 +21,16 @@ export function handleLogin(id) {
       });
   };
 }
+
+export function handleLogout() {
+  return dispatch => {
+    dispatch(showLoading());
+    return login()
+      .then(() => dispatch(setAuthedUser(null)))
+      .then(() => dispatch(hideLoading()))
+      .catch(e => {
+        dispatch(hideLoading());
+        console.log("Error while logging in user:", e);
+      });
+  };
+}
