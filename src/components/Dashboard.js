@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import QuestionList from './QuestionList'
+import QuestionList from "./QuestionList";
 
 class Dashboard extends Component {
   state = {
@@ -15,8 +15,9 @@ class Dashboard extends Component {
 
   render() {
     const { filter } = this.state;
+    const { answeredQuestions, unansweredQuestions } = this.props;
     return (
-      <div className='center'>
+      <div className="center">
         <div className="filters">
           <button
             className={
@@ -41,7 +42,13 @@ class Dashboard extends Component {
             Answered Questions
           </button>
         </div>
-        <QuestionList />
+        <QuestionList
+          ids={
+            filter === "unanswered-questions"
+              ? unansweredQuestions
+              : answeredQuestions
+          }
+        />
       </div>
     );
   }
