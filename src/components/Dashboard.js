@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state = {
     filter: "unanswered-questions"
   };
@@ -43,3 +44,20 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+function mapStateToProps({ authedUser, questions, users }) {
+  const currentUser = users[authedUser];
+  const allQuestionIds = Object.keys(questions);
+  const answeredQuestions = Object.keys(currentUser.answers).map(
+    id => questions[id]
+  );
+  const unansweredQuestions = allQuestionIds
+    .filter(id => !answeredQuestions.includes(id))
+    .map(id => questions[id]);
+  return {
+    answeredQuestions,
+    unansweredQuestions
+  };
+}
+
+export default connect(mapStateToProps)(Dashboard);
