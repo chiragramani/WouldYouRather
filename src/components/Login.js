@@ -1,10 +1,25 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
-    selectedUser: null
+    selectedUserId: null
   };
+
+  didSelectUser = e => {
+    e.preventDefault();
+    this.setState({
+      selectedUserId: e.target.value
+    });
+  };
+
   render() {
+    const { users } = this.props;
+    const { selectedUserId } = this.state;
+    const selectedUser =
+      selectedUserId === null
+        ? null
+        : users.filter(user => user.id === selectedUserId);
     return (
       <div className="container-login">
         <h3>Welcome to Would You Rather App!</h3>
@@ -14,17 +29,30 @@ export default class Login extends Component {
           alt="Avatar"
         />
         <div className="select-wrapper">
-          {/* <select>
-            <option value="" disabled selected>
+          <select
+            value={selectedUser === null ? "" : selectedUser.name}
+            onChange={this.didSelectUser}
+          >
+            <option value="" disabled>
               Select User
             </option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-          </select> */}
+            {users.map(user => (
+              <option key={user.id} value={user.id}>
+                {user.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <button>Login</button>
+        <button disabled={selectedUserId === null}>Login</button>
       </div>
     );
   }
 }
+
+function mapStateToProps({ users }) {
+  return {
+    users: Object.keys(users).map(id => users[id])
+  };
+}
+
+export default connect(mapStateToProps)(Login);

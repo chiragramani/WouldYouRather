@@ -10,13 +10,20 @@ class App extends Component {
     dispatch(handleInitialData());
   }
   render() {
+    const { loading } = this.props;
     return (
       <div>
         <LoadingBar />
-        <Login />
+        { loading ? null : <Login />}
       </div>
     );
   }
 }
 
-export default connect()(App);
+function mapStateToProps({ users }) {
+  return  {
+    loading: users === null
+  }
+}
+
+export default connect(mapStateToProps)(App);
