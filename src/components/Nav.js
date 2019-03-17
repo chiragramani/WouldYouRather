@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { handleLogout } from '../actions/authedUser'
+import { handleLogout } from "../actions/authedUser";
 
 class Nav extends Component {
   onLogout = e => {
     e.preventDefault();
     const { dispatch } = this.props;
-    dispatch(handleLogout())
+    dispatch(handleLogout());
   };
 
   render() {
@@ -35,7 +35,9 @@ class Nav extends Component {
               <li> | </li>
               <li>Hello, {user.name}</li>
               <li>
-                <button onClick={this.onLogout}>Logout</button>
+                <NavLink to="/logout" onClick={this.onLogout}>
+                  Logout
+                </NavLink>
               </li>
             </Fragment>
           )}
