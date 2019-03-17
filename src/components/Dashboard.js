@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import QuestionList from './QuestionList'
 
 class Dashboard extends Component {
   state = {
@@ -15,7 +16,7 @@ class Dashboard extends Component {
   render() {
     const { filter } = this.state;
     return (
-      <div>
+      <div className='center'>
         <div className="filters">
           <button
             className={
@@ -40,6 +41,7 @@ class Dashboard extends Component {
             Answered Questions
           </button>
         </div>
+        <QuestionList />
       </div>
     );
   }
@@ -48,12 +50,10 @@ class Dashboard extends Component {
 function mapStateToProps({ authedUser, questions, users }) {
   const currentUser = users[authedUser];
   const allQuestionIds = Object.keys(questions);
-  const answeredQuestions = Object.keys(currentUser.answers).map(
-    id => questions[id]
+  const answeredQuestions = Object.keys(currentUser.answers);
+  const unansweredQuestions = allQuestionIds.filter(
+    id => !answeredQuestions.includes(id)
   );
-  const unansweredQuestions = allQuestionIds
-    .filter(id => !answeredQuestions.includes(id))
-    .map(id => questions[id]);
   return {
     answeredQuestions,
     unansweredQuestions

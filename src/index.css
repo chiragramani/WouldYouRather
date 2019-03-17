@@ -140,10 +140,9 @@ li {
   text-align: center;
   display: flex;
   justify-content: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  margin: auto;
   box-shadow: 0 1px 20px 0 rgba(46,61,73,.2);
+  width: 600px;
 }
 
 .filterButton:first-child {
@@ -158,7 +157,7 @@ li {
 }
 
 .filterButton {
-  min-width: 11.26rem;
+  min-width: 20rem;
   padding: .75rem;
   border-radius: 0px;
   outline: 0px;
@@ -166,6 +165,7 @@ li {
   font-size: 0.75rem;
   border: .0625rem solid #015c01;
   cursor: pointer;
+  height: 48px;
 }
 
 
@@ -178,6 +178,5 @@ li {
   background-color: white;
   color: black;
 }
-
 
 
