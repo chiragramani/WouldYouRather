@@ -1,5 +1,4 @@
 # Would You Rather
----
 
 ## Project Overview:
 
