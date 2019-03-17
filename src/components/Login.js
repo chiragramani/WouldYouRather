@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SelectUser from "./SelectUser";
 
 class Login extends Component {
   state = {
@@ -23,29 +24,20 @@ class Login extends Component {
       selectedUserId === null
         ? null
         : users.filter(user => user.id === selectedUserId)[0];
+    const avatarURL =
+      selectedUser === null
+        ? "https://image.flaticon.com/icons/svg/149/149071.svg"
+        : selectedUser.avatarURL;
     return (
       <div className="container-login">
         <h3>Welcome to Would You Rather App!</h3>
         <h4>Please sign in to continue</h4>
-        <img
-          src={selectedUser === null ? "https://image.flaticon.com/icons/svg/149/149071.svg" : selectedUser.avatarURL}
-          alt="Avatar"
+        <img src={avatarURL} alt="Avatar" />
+        <SelectUser
+          selectedUser={selectedUser}
+          users={users}
+          didSelectUser={this.didSelectUser}
         />
-        <div className="select-wrapper">
-          <select
-            value={selectedUser === null ? "" : selectedUser.id}
-            onChange={this.didSelectUser}
-          >
-            <option value="" disabled>
-              Select User
-            </option>
-            {users.map(user => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-        </div>
         <button disabled={selectedUser === null} onClick={this.didTapOnLogin}>
           Login
         </button>
