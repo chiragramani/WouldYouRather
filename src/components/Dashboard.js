@@ -57,10 +57,12 @@ class Dashboard extends Component {
 function mapStateToProps({ authedUser, questions, users }) {
   const currentUser = users[authedUser];
   const allQuestionIds = Object.keys(questions);
-  const answeredQuestions = Object.keys(currentUser.answers);
-  const unansweredQuestions = allQuestionIds.filter(
-    id => !answeredQuestions.includes(id)
+  const answeredQuestions = Object.keys(currentUser.answers).sort(
+    (a, b) => questions[b].timestamp - questions[a].timestamp
   );
+  const unansweredQuestions = allQuestionIds
+    .filter(id => !answeredQuestions.includes(id))
+    .sort((a, b) => questions[b].timestamp - questions[a].timestamp);
   return {
     answeredQuestions,
     unansweredQuestions
