@@ -194,7 +194,11 @@ li {
   width: 600px;
 }
 
-/* .question-info h4:first-child{
-  text-align: left;
-} */
+.user-answer {
+  color: #015c01;
+  font-weight: bold;
+}
 
+.user-answer::before {
+  content: "You answered: ";
+}

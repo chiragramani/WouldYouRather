@@ -9,6 +9,7 @@ import NewQuestion from "./NewQuestion";
 import LoadingBar from "react-redux-loading";
 import PrivateRoute from "./PrivateRoute";
 import Nav from "./Nav";
+import QuestionDetail from "./QuestionDetail";
 
 class App extends Component {
   componentDidMount() {
@@ -41,6 +42,12 @@ class App extends Component {
                 path="/new"
                 exact
                 component={NewQuestion}
+                isAuthenticated={isAuthenticated}
+              />
+              <PrivateRoute
+                path="/question/:id"
+                exact
+                component={QuestionDetail}
                 isAuthenticated={isAuthenticated}
               />
             </div>
