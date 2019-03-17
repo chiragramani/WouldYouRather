@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SelectUser from "./SelectUser";
+import { setAuthedUser } from '../actions/authedUser'
 
 class Login extends Component {
   state = {
@@ -15,7 +16,11 @@ class Login extends Component {
     });
   };
 
-  didTapOnLogin = () => {};
+  didTapOnLogin = () => {
+    const { dispatch } = this.props;
+    const { selectedUserId } = this.state;
+    dispatch(setAuthedUser(selectedUserId))
+  };
 
   render() {
     const { users } = this.props;
