@@ -1,17 +1,23 @@
-import { _getUsers, _getQuestions } from "./_DATA";
+import { _getUsers, _getQuestions, _saveQuestion } from "./_DATA";
 
 export function getInitialData() {
-  return Promise.all([_getUsers(), _getQuestions()]).then(([users, questions]) => ({
-    questions,
-    users
-  }));
+  return Promise.all([_getUsers(), _getQuestions()]).then(
+    ([users, questions]) => ({
+      questions,
+      users
+    })
+  );
 }
 
 /// So that it becomes async which is the realistic behavior
 export function login() {
-  return new Promise(function(resolve,reject) {
+  return new Promise(function(resolve, reject) {
     setTimeout(() => {
-      resolve()
+      resolve();
     }, 1000);
-  })
+  });
+}
+
+export function saveQuestion(question) {
+  return _saveQuestion(question);
 }

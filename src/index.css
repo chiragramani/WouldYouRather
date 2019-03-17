@@ -99,6 +99,42 @@ li {
   flex-direction: column;
 }
 
+.newQuestion {
+  width: 100%;
+  max-width: 590px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  border: 1px solid #dad7d7;
+  border-radius: 3px;
+}
+
+.center {
+  text-align: center;
+}
+
+.newQuestion h3,
+.newQuestion h4,
+.newQuestion h5 {
+  margin: 2px 20px;
+}
+
+.newQuestion button {
+  height: 40px;
+  width: 80%;
+  background-color: #57b846;
+  font-size: 1em;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
+.newQuestion input {
+  height: 40px;
+  margin: 10px;
+}
 
 
 
