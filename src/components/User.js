@@ -11,10 +11,10 @@ class User extends Component {
       <div className="user">
         <img src={user.avatarURL} alt="avatar" />
         <div className="userinfo">
-          <p>{user.name}</p>
+          <h4>{user.name}</h4>
           <p>Answered questions: {questionsCount}</p>
           <p>Created questions: {answersCount}</p>
-          <p>Total score: {totalScore}</p>
+          <p><b>Total score: {totalScore}</b></p>
         </div>
       </div>
     );
