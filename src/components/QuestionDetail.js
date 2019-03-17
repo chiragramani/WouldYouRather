@@ -1,8 +1,37 @@
 import React, { Component, Fragment } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-
+import { handleAddAnswer } from "../actions/questions";
 class QuestionDetail extends Component {
+  state = {
+    selected: "optionOne",
+    answered: false
+  };
+
+  handleRadioChange = e => {
+    this.setState({
+      selected: e.target.name
+    });
+  };
+
+  handleVote = e => {
+    e.preventDefault();
+    const { question, dispatch } = this.props;
+    const { selected } = this.state;
+    dispatch(handleAddAnswer(question.id, selected))
+    .then(() =>
+      this.setState({
+        isAnswered: true
+      })
+    );
+  };
+
   render() {
+    const { answered } = this.state;
+    if (answered === true) {
+      return <Redirect to="/home" />;
+    }
+
     const { question, isAnswered, author, answerByUser } = this.props;
     const { optionOne, optionTwo } = question;
     const optionOneVotes = optionOne.votes.length;
@@ -24,7 +53,7 @@ class QuestionDetail extends Component {
               >
                 {optionTwo.text}
               </p>
-              <p>Others voted: </p>
+              <h4>Others voted: </h4>
               <p>
                 {optionOne.text} Total: {optionOneVotes} votes
               </p>
@@ -33,8 +62,33 @@ class QuestionDetail extends Component {
               </p>
             </Fragment>
           )}
-
-          {/* <button onClick={this.didTapOnViewPoll}>View Poll</button> */}
+          {!isAnswered && (
+            <form>
+              <div>
+                <span>
+                  <input
+                    type="radio"
+                    name="optionOne"
+                    onChange={this.handleRadioChange}
+                    checked={this.state.selected === "optionOne"}
+                  />
+                  {optionOne.text}
+                </span>
+              </div>
+              <div>
+                <span>
+                  <input
+                    type="radio"
+                    name="optionTwo"
+                    onChange={this.handleRadioChange}
+                    checked={this.state.selected === "optionTwo"}
+                  />
+                  {optionTwo.text}
+                </span>
+              </div>
+              <button onClick={this.handleVote}>Answer!</button>
+            </form>
+          )}
         </div>
       </div>
     );
