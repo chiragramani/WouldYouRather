@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleAddQuestion } from '../actions/questions'
+import { Redirect } from "react-router-dom";
+import { handleAddQuestion } from "../actions/questions";
 
 class NewQuestion extends Component {
   state = {
     answer1: "",
-    answer2: ""
+    answer2: "",
+    isQuestionAdded: false
   };
 
   handleAskQuestion = e => {
     e.preventDefault();
     const { answer1, answer2 } = this.state;
     const { dispatch } = this.props;
-    dispatch(handleAddQuestion(answer1, answer2));
+    dispatch(handleAddQuestion(answer1, answer2)).then(() =>
+      this.setState({
+        isQuestionAdded: true
+      })
+    );
   };
 
   handleChange = e => {
@@ -20,11 +26,14 @@ class NewQuestion extends Component {
     const text = e.target.value;
     this.setState({
       [name]: text
-    })
+    });
   };
 
   render() {
-    const { answer1, answer2 } = this.state;
+    const { answer1, answer2, isQuestionAdded } = this.state;
+    if (isQuestionAdded) {
+      return <Redirect to="/home" />;
+    }
     const isAskCTADisabled = !(answer1 && answer2);
     return (
       <div className="newQuestion">
@@ -43,7 +52,9 @@ class NewQuestion extends Component {
           name="answer2"
           onChange={this.handleChange}
         />
-        <button onClick={this.handleAskQuestion} disabled={isAskCTADisabled}>Ask this question!</button>
+        <button onClick={this.handleAskQuestion} disabled={isAskCTADisabled}>
+          Ask this question!
+        </button>
       </div>
     );
   }
