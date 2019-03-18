@@ -18,8 +18,7 @@ class QuestionDetail extends Component {
     e.preventDefault();
     const { question, dispatch } = this.props;
     const { selected } = this.state;
-    dispatch(handleAddAnswer(question.id, selected))
-    .then(() =>
+    dispatch(handleAddAnswer(question.id, selected)).then(() =>
       this.setState({
         isAnswered: true
       })
@@ -32,10 +31,15 @@ class QuestionDetail extends Component {
       return <Redirect to="/home" />;
     }
 
-    const { question, isAnswered, author, answerByUser } = this.props;
+    const { question, isAnswered, author, answerByUser, totalUsers } = this.props;
+    if (!question) {
+      return <div>Question does not exist.</div>;
+    }
     const { optionOne, optionTwo } = question;
     const optionOneVotes = optionOne.votes.length;
     const optionTwoVotes = optionTwo.votes.length;
+    const optionOneVotesPercentage = (optionOneVotes/totalUsers*100).toFixed(2);
+    const optionTwoVotesPercentage = (optionTwoVotes/totalUsers*100).toFixed(2)
     return (
       <div className="question">
         <img src={author.avatarURL} alt="Avatar" />
@@ -55,10 +59,10 @@ class QuestionDetail extends Component {
               </p>
               <h4>Others voted: </h4>
               <p>
-                {optionOne.text} Total: {optionOneVotes} votes
+                {optionOne.text} Total: {optionOneVotes} votes | {optionOneVotesPercentage}% votes
               </p>
               <p>
-                {optionTwo.text} Total: {optionTwoVotes} votes
+                {optionTwo.text} Total: {optionTwoVotes} votes | {optionTwoVotesPercentage}% votes
               </p>
             </Fragment>
           )}
@@ -97,7 +101,7 @@ class QuestionDetail extends Component {
 
 function mapStateToProps({ users, questions, authedUser }, props) {
   const { id } = props.match.params;
-  const question = questions[id];
+  const question = questions[id] || null;
   const author = users[question.author];
   const isAnswered = Object.keys(users[authedUser].answers).includes(id);
   const answerByUser = users[authedUser].answers[id];
@@ -105,7 +109,8 @@ function mapStateToProps({ users, questions, authedUser }, props) {
     question,
     isAnswered,
     author,
-    answerByUser
+    answerByUser,
+    totalUsers: Object.keys(users).length
   };
 }
 

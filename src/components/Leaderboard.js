@@ -23,9 +23,9 @@ function mapStateToProps({ users }) {
   return {
     userIds: Object.keys(users).sort((a, b) => {
       const aCount =
-        (users[a].questions.length || 0) + (users[a].answers.length || 0);
+        (users[a].questions.length || 0) + (Object.keys(users[a].answers).length || 0);
       const bCount =
-        (users[b].questions.length || 0) + (users[b].answers.length || 0);
+        (users[b].questions.length || 0) + (Object.keys(users[b].answers).length || 0);
       return bCount - aCount;
     })
   };
