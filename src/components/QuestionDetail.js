@@ -102,7 +102,7 @@ class QuestionDetail extends Component {
 function mapStateToProps({ users, questions, authedUser }, props) {
   const { id } = props.match.params;
   const question = questions[id] || null;
-  const author = users[question.author];
+  const author = question ? users[question.author]: null;
   const isAnswered = Object.keys(users[authedUser].answers).includes(id);
   const answerByUser = users[authedUser].answers[id];
   return {
